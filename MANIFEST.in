@@ -1,0 +1,2 @@
+include CONTRIBUTORS README.rst UNLICENSE
+recursive-include unit_field *.py *.html *.js
