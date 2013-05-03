@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='django-unit-field',
-    version='0.0.1',
+    version='0.0.2',
     author=u'Christian Kohout',
     author_email='ck@getaweb.at',
     packages=find_packages(),

@@ -38,12 +38,30 @@ django-unit-field provides a set of Fields for your model. Each field will creat
 Enhance your models
 ===================
 
+Example::
+
     from unit_field.fields import SolidMeasureField, TemperatureField
 
     class Engine(models.Model):
         cubic_capacity = SolidMeasureField(
             verbose_name=u'cubic capacity')
         operating_temperature = TemperatureField(
+            verbose_name=u'operatiing temperature')
+
+==================================
+Enable client-side unit conversion
+==================================
+
+If you want to use client-side unit conversion, you have to include the static javascript file located in the ``static`` directory of the app::
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/{{jquery-version}}/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.unit-field.js"></script>
+
+If you want to exclude some fields from automatic conversion, you can use the additional parameter ``auto_convert``::
+
+    class Engine(models.Model):
+        ...
+        operating_temperature = TemperatureField(auto_convert=False,
             verbose_name=u'operatiing temperature')
 
 ====================

@@ -23,16 +23,16 @@ def md5_hexdigest(value):
 
 class UnitInputField(FloatField):
 
-    auto_calc = True
+    auto_convert = True
 
     def __init__(self, *args, **kwargs):
-        auto_calc = kwargs.pop('auto_calc', None)
-        if auto_calc is not None:
-            self.auto_calc = auto_calc
+        auto_convert = kwargs.pop('auto_convert', None)
+        if auto_convert is not None:
+            self.auto_convert = auto_convert
         super(UnitInputField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
-        if self.auto_calc:
+        if self.auto_convert:
             defaults = {'form_class': forms.UnitInputField }
         else:
             defaults = {'form_class': CharField }
@@ -66,14 +66,14 @@ class UnitField(FloatField):
     """
     choices = [ (1, '?',) ]
 
-    auto_calc = True
+    auto_convert = True
 
     def __init__(self, *args, **kwargs):
         if 'choices' in kwargs:
             raise TypeError("%s invalid attribute 'choices'" % (
                 self.__class__.__name__, ))
         self.units = kwargs.pop('units', [])
-        self.auto_calc = kwargs.pop('auto_calc', True)
+        self.auto_convert = kwargs.pop('auto_convert', True)
         kwargs['editable'] = False
         kwargs['default'] = 0.
         super(UnitField, self).__init__(*args, **kwargs)
@@ -82,7 +82,7 @@ class UnitField(FloatField):
         self.name = name
 
         self.input_field = UnitInputField(default=0, blank=True,
-            auto_calc=self.auto_calc)
+            auto_convert=self.auto_convert)
         cls.add_to_class("%s_input" % (self.name,), self.input_field)
 
         self.unit_field = FloatField(default=1, choices=self.choices)
