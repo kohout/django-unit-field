@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db.models import FloatField
+from django.forms import CharField
 from unit_field.units import (Unit, UnitValueCreator,
     UNITS_LENGTH_CHOICES,
     UNITS_SQUARE_MEASURE_CHOICES,
@@ -19,6 +20,24 @@ except ImportError:
 
 def md5_hexdigest(value):
     return md5(value).hexdigest()
+
+class UnitInputField(FloatField):
+
+    auto_calc = True
+
+    def __init__(self, *args, **kwargs):
+        auto_calc = kwargs.pop('auto_calc', None)
+        if auto_calc is not None:
+            self.auto_calc = auto_calc
+        super(UnitInputField, self).__init__(*args, **kwargs)
+
+    def formfield(self, **kwargs):
+        if self.auto_calc:
+            defaults = {'form_class': forms.UnitInputField }
+        else:
+            defaults = {'form_class': CharField }
+        defaults.update(kwargs)
+        return super(UnitInputField, self).formfield(**defaults)
 
 class CalculatedFloatField(FloatField):
     """
@@ -47,11 +66,14 @@ class UnitField(FloatField):
     """
     choices = [ (1, '?',) ]
 
+    auto_calc = True
+
     def __init__(self, *args, **kwargs):
         if 'choices' in kwargs:
             raise TypeError("%s invalid attribute 'choices'" % (
                 self.__class__.__name__, ))
         self.units = kwargs.pop('units', [])
+        self.auto_calc = kwargs.pop('auto_calc', True)
         kwargs['editable'] = False
         kwargs['default'] = 0.
         super(UnitField, self).__init__(*args, **kwargs)
@@ -59,7 +81,8 @@ class UnitField(FloatField):
     def contribute_to_class(self, cls, name):
         self.name = name
 
-        self.input_field = FloatField(default=0, blank=True)
+        self.input_field = UnitInputField(default=0, blank=True,
+            auto_calc=self.auto_calc)
         cls.add_to_class("%s_input" % (self.name,), self.input_field)
 
         self.unit_field = FloatField(default=1, choices=self.choices)
