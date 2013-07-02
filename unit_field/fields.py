@@ -10,7 +10,19 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_ELECTRIC_CURRENT_CHOICES,
     UNITS_TEMPERATURE_CHOICES,
     UNITS_AMOUNT_OF_SUBSTANCE_CHOICES,
-    UNITS_LUMINOUS_INTENSITY_CHOICES)
+    UNITS_LUMINOUS_INTENSITY_CHOICES,
+
+    UNITS_ACCELERATION_CHOICES,
+    UNITS_ANGLE_CHOICES,
+    UNITS_CRACKLE_CHOICES,
+    UNITS_DENSITY_CHOICES,
+    UNITS_FORCE_CHOICES,
+    UNITS_INERTIA_TORQUE_CHOICES,
+    UNITS_JERK_CHOICES,
+    UNITS_SNAP_CHOICES,
+    UNITS_TORQUE_CHOICES,
+    UNITS_VELOCITY_CHOICES)
+
 from unit_field import forms
 
 try:
@@ -30,6 +42,12 @@ class UnitInputField(FloatField):
         if auto_convert is not None:
             self.auto_convert = auto_convert
         super(UnitInputField, self).__init__(*args, **kwargs)
+
+    def get_prep_value(self, value):
+        try:
+            return float(value)
+        except TypeError, ValueError:
+            return None
 
     def formfield(self, **kwargs):
         if self.auto_convert:
@@ -56,7 +74,8 @@ class CalculatedFloatField(FloatField):
         input_value = getattr(model_instance, input_field_name)
         unit_value = getattr(model_instance, unit_field_name)
 
-        setattr(model_instance, self.attname, input_value * unit_value)
+        if input_value and unit_value:
+            setattr(model_instance, self.attname, input_value * unit_value)
         return getattr(model_instance, self.attname)
 
 class UnitField(FloatField):
@@ -68,12 +87,24 @@ class UnitField(FloatField):
 
     auto_convert = True
 
+    verbose_name = u'(UnitField)'
+
+    blank = False
+
+    null = False
+
+    def full_label(self):
+        return u'x = 12.472 m²'
+
     def __init__(self, *args, **kwargs):
         if 'choices' in kwargs:
             raise TypeError("%s invalid attribute 'choices'" % (
                 self.__class__.__name__, ))
         self.units = kwargs.pop('units', [])
         self.auto_convert = kwargs.pop('auto_convert', True)
+        self.verbose_name = kwargs.get('verbose_name')
+        self.blank = kwargs.get('blank')
+        self.null = kwargs.get('null')
         kwargs['editable'] = False
         kwargs['default'] = 0.
         super(UnitField, self).__init__(*args, **kwargs)
@@ -81,14 +112,19 @@ class UnitField(FloatField):
     def contribute_to_class(self, cls, name):
         self.name = name
 
-        self.input_field = UnitInputField(default=0, blank=True,
-            auto_convert=self.auto_convert)
+        self.input_field = UnitInputField(default=0,
+            blank=self.blank,
+            null=self.null,
+            auto_convert=self.auto_convert,
+            verbose_name=self.verbose_name)
         cls.add_to_class("%s_input" % (self.name,), self.input_field)
 
         self.unit_field = FloatField(default=1, choices=self.choices)
         cls.add_to_class("%s_unit" % (self.name,), self.unit_field)
 
-        self.value_field = CalculatedFloatField()
+        self.value_field = CalculatedFloatField(
+            blank=self.blank,
+            null=self.null)
         cls.add_to_class("%s_value" % (self.name,), self.value_field)
 
         self.key = md5_hexdigest(self.name)
@@ -108,6 +144,7 @@ class UnitField(FloatField):
         defaults.update(kwargs)
         return super(UnitField, self).formfield(**defaults)
 
+# Fields for Base Units
 
 class LengthField(UnitField):
     choices = UNITS_LENGTH_CHOICES
@@ -132,3 +169,43 @@ class AmountOfSubstanceField(UnitField):
 
 class LuminousIntensityField(UnitField):
     choices = UNITS_LUMINOUS_INTENSITY_CHOICES
+
+# Fields for Derived Units
+
+class AccelerationField(UnitField):
+    choices = UNITS_ACCELERATION_CHOICES
+
+class AngleField(UnitField):
+    choices = UNITS_ANGLE_CHOICES
+
+class CrackleField(UnitField):
+    choices = UNITS_CRACKLE_CHOICES
+
+class DensityField(UnitField):
+    choices = UNITS_DENSITY_CHOICES
+
+class ForceField(UnitField):
+    choices = UNITS_FORCE_CHOICES
+
+class InertiaTorqueField(UnitField):
+    choices = UNITS_INERTIA_TORQUE_CHOICES
+
+class JerkField(UnitField):
+    choices = UNITS_JERK_CHOICES
+
+class SnapField(UnitField):
+    choices = UNITS_SNAP_CHOICES
+
+class TorqueField(UnitField):
+    choices = UNITS_TORQUE_CHOICES
+
+class VelocityField(UnitField):
+    choices = UNITS_VELOCITY_CHOICES
+
+try:
+    from south.modelsinspector import add_introspection_rules
+    rules = [((CalculatedFloatField, ), [], {}),]
+    add_introspection_rules(rules, [
+        "^unit_field\.fields"])
+except ImportError:
+    pass

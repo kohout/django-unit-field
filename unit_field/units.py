@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import math
 
 class Unit(object):
     def __init__(self, factor, abbrev, label):
@@ -107,6 +108,8 @@ UNITS_LUMINOUS_INTENSITY = [
     Unit(1,        'cd', 'candela'      ),
 ]
 
+# base units (SI system)
+
 UNITS_LENGTH_CHOICES = get_choices(UNITS_LENGTH)
 UNITS_SQUARE_MEASURE_CHOICES = get_choices(UNITS_SQUARE_MEASURE)
 UNITS_SOLID_MEASURE_CHOICES = get_choices(UNITS_SOLID_MEASURE)
@@ -116,3 +119,60 @@ UNITS_ELECTRIC_CURRENT_CHOICES = get_choices(UNITS_ELECTRIC_CURRENT)
 UNITS_TEMPERATURE_CHOICES = get_choices(UNITS_TEMPERATURE)
 UNITS_AMOUNT_OF_SUBSTANCE_CHOICES = get_choices(UNITS_AMOUNT_OF_SUBSTANCE)
 UNITS_LUMINOUS_INTENSITY_CHOICES = get_choices(UNITS_LUMINOUS_INTENSITY)
+
+# derived units
+
+UNITS_ANGLE = [
+    Unit(1,             'rad',  'Radians'    ),
+    Unit(180 / math.pi, '°',    'Degrees'    ),
+    Unit(200 / math.pi, 'grad', 'Grads'      ),
+]
+
+UNITS_DENSITY = [
+    Unit(1,        'kg/m³',  'kg/m³'),
+]
+
+UNITS_FORCE = [
+    Unit(1,        'N',  'Newton'),
+]
+
+UNITS_TORQUE = [
+    Unit(1,        'Nm', 'Newtonmeter'),
+]
+
+UNITS_VELOCITY = [
+    Unit(1,        'm/s',  'metres per second'),
+    Unit(3.6,      'km/h', 'kilometres per hour'),
+]
+
+UNITS_ACCELERATION = [
+    Unit(1,        'm/s²',  u'm/s²'),
+]
+
+UNITS_JERK = [
+    Unit(1,        'm/s³',  u'm/s³'),
+]
+
+UNITS_SNAP = [
+    Unit(1,        'm/s⁴',  u'm/s⁴'),
+]
+
+UNITS_CRACKLE = [
+    Unit(1,        'm/s⁵',  u'm/s⁵'),
+]
+
+UNITS_INERTIA_TORQUE = [
+    Unit(1,         'kgm²', u'kgm²'),
+]
+
+UNITS_ACCELERATION_CHOICES = get_choices(UNITS_ACCELERATION)
+UNITS_ANGLE_CHOICES = get_choices(UNITS_ANGLE)
+UNITS_CRACKLE_CHOICES = get_choices(UNITS_CRACKLE)
+UNITS_DENSITY_CHOICES = get_choices(UNITS_DENSITY)
+UNITS_FORCE_CHOICES = get_choices(UNITS_FORCE)
+UNITS_INERTIA_TORQUE_CHOICES = get_choices(
+    UNITS_INERTIA_TORQUE)
+UNITS_JERK_CHOICES = get_choices(UNITS_JERK)
+UNITS_SNAP_CHOICES = get_choices(UNITS_SNAP)
+UNITS_TORQUE_CHOICES = get_choices(UNITS_TORQUE)
+UNITS_VELOCITY_CHOICES = get_choices(UNITS_VELOCITY)
