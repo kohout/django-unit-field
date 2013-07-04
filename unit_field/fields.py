@@ -20,6 +20,7 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_INERTIA_TORQUE_CHOICES,
     UNITS_JERK_CHOICES,
     UNITS_SNAP_CHOICES,
+    UNITS_TORSION_CHOICES,
     UNITS_TORQUE_CHOICES,
     UNITS_VELOCITY_CHOICES)
 
@@ -201,6 +202,9 @@ class TorqueField(UnitField):
 
 class VelocityField(UnitField):
     choices = UNITS_VELOCITY_CHOICES
+
+class TorsionField(UnitField):
+    choices = UNITS_TORSION_CHOICES
 
 try:
     from south.modelsinspector import add_introspection_rules

@@ -165,6 +165,10 @@ UNITS_INERTIA_TORQUE = [
     Unit(1,         'kgm²', u'kgm²'),
 ]
 
+UNITS_TORSION = [
+    Unit(1,         'Nm/arcmin', u'Nm/arcmin'),
+]
+
 UNITS_ACCELERATION_CHOICES = get_choices(UNITS_ACCELERATION)
 UNITS_ANGLE_CHOICES = get_choices(UNITS_ANGLE)
 UNITS_CRACKLE_CHOICES = get_choices(UNITS_CRACKLE)
@@ -176,3 +180,4 @@ UNITS_JERK_CHOICES = get_choices(UNITS_JERK)
 UNITS_SNAP_CHOICES = get_choices(UNITS_SNAP)
 UNITS_TORQUE_CHOICES = get_choices(UNITS_TORQUE)
 UNITS_VELOCITY_CHOICES = get_choices(UNITS_VELOCITY)
+UNITS_TORSION_CHOICES = get_choices(UNITS_TORSION)
