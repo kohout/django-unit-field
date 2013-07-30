@@ -123,9 +123,9 @@ UNITS_LUMINOUS_INTENSITY_CHOICES = get_choices(UNITS_LUMINOUS_INTENSITY)
 # derived units
 
 UNITS_ANGLE = [
-    Unit(1,             'rad',  'Radians'    ),
-    Unit(180 / math.pi, '°',    'Degrees'    ),
-    Unit(200 / math.pi, 'grad', 'Grads'      ),
+    Unit(1,                      'rad',  'Radians'    ),
+    Unit(0.0174532925199,   '°',    'Degrees'    ), # * math.pi / 180
+    Unit(0.0157079632679,   'grad', 'Grads'      ), # * math.pi / 200
 ]
 
 UNITS_DENSITY = [
@@ -134,6 +134,10 @@ UNITS_DENSITY = [
 
 UNITS_FORCE = [
     Unit(1,        'N',  'Newton'),
+]
+
+UNITS_SPEED = [
+    Unit(1,        '1/min', 'rotation per minute'),
 ]
 
 UNITS_TORQUE = [
@@ -149,6 +153,15 @@ UNITS_ACCELERATION = [
     Unit(1,        'm/s²',  u'm/s²'),
 ]
 
+UNITS_CURRENT = [
+    Unit(0.001,       'mA',  u'milli ampere'),
+    Unit(1,            'A',  u'ampere'),
+]
+
+UNITS_POTENTIAL = [
+    Unit(1,        'V',  u'volt'),
+]
+
 UNITS_JERK = [
     Unit(1,        'm/s³',  u'm/s³'),
 ]
@@ -162,7 +175,8 @@ UNITS_CRACKLE = [
 ]
 
 UNITS_INERTIA_TORQUE = [
-    Unit(1,         'kgm²', u'kgm²'),
+    Unit(1,         'kgm²',  u'kgm²' ),
+    Unit(0.0001,    'kgcm²', u'kgcm²'),
 ]
 
 UNITS_TORSION = [
@@ -172,12 +186,15 @@ UNITS_TORSION = [
 UNITS_ACCELERATION_CHOICES = get_choices(UNITS_ACCELERATION)
 UNITS_ANGLE_CHOICES = get_choices(UNITS_ANGLE)
 UNITS_CRACKLE_CHOICES = get_choices(UNITS_CRACKLE)
+UNITS_CURRENT_CHOICES = get_choices(UNITS_CURRENT)
 UNITS_DENSITY_CHOICES = get_choices(UNITS_DENSITY)
 UNITS_FORCE_CHOICES = get_choices(UNITS_FORCE)
 UNITS_INERTIA_TORQUE_CHOICES = get_choices(
     UNITS_INERTIA_TORQUE)
 UNITS_JERK_CHOICES = get_choices(UNITS_JERK)
+UNITS_POTENTIAL_CHOICES = get_choices(UNITS_POTENTIAL)
 UNITS_SNAP_CHOICES = get_choices(UNITS_SNAP)
+UNITS_SPEED_CHOICES = get_choices(UNITS_SPEED)
 UNITS_TORQUE_CHOICES = get_choices(UNITS_TORQUE)
 UNITS_VELOCITY_CHOICES = get_choices(UNITS_VELOCITY)
 UNITS_TORSION_CHOICES = get_choices(UNITS_TORSION)

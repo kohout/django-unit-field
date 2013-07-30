@@ -15,11 +15,14 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_ACCELERATION_CHOICES,
     UNITS_ANGLE_CHOICES,
     UNITS_CRACKLE_CHOICES,
+    UNITS_CURRENT_CHOICES,
     UNITS_DENSITY_CHOICES,
     UNITS_FORCE_CHOICES,
     UNITS_INERTIA_TORQUE_CHOICES,
     UNITS_JERK_CHOICES,
+    UNITS_POTENTIAL_CHOICES,
     UNITS_SNAP_CHOICES,
+    UNITS_SPEED_CHOICES,
     UNITS_TORSION_CHOICES,
     UNITS_TORQUE_CHOICES,
     UNITS_VELOCITY_CHOICES)
@@ -48,7 +51,7 @@ class UnitInputField(FloatField):
         try:
             return float(value)
         except TypeError, ValueError:
-            return None
+            return 0.0
 
     def formfield(self, **kwargs):
         if self.auto_convert:
@@ -75,8 +78,11 @@ class CalculatedFloatField(FloatField):
         input_value = getattr(model_instance, input_field_name)
         unit_value = getattr(model_instance, unit_field_name)
 
-        if input_value and unit_value:
+        if (input_value is not None) and (unit_value is not None):
             setattr(model_instance, self.attname, input_value * unit_value)
+        else:
+            setattr(model_instance, self.attname, 0.0)
+
         return getattr(model_instance, self.attname)
 
 class UnitField(FloatField):
@@ -182,6 +188,9 @@ class AngleField(UnitField):
 class CrackleField(UnitField):
     choices = UNITS_CRACKLE_CHOICES
 
+class CurrentField(UnitField):
+    choices = UNITS_CURRENT_CHOICES
+
 class DensityField(UnitField):
     choices = UNITS_DENSITY_CHOICES
 
@@ -194,8 +203,14 @@ class InertiaTorqueField(UnitField):
 class JerkField(UnitField):
     choices = UNITS_JERK_CHOICES
 
+class PotentialField(UnitField):
+    choices = UNITS_POTENTIAL_CHOICES
+
 class SnapField(UnitField):
     choices = UNITS_SNAP_CHOICES
+
+class SpeedField(UnitField):
+    choices = UNITS_SPEED_CHOICES
 
 class TorqueField(UnitField):
     choices = UNITS_TORQUE_CHOICES
