@@ -1,31 +1,31 @@
 # -*- coding: utf-8 -*-
-from django.db.models import FloatField
+from django.db.models import FloatField, CharField as ModelCharField
 from django.forms import CharField
 from unit_field.units import (Unit, UnitValueCreator,
-    UNITS_LENGTH_CHOICES,
-    UNITS_SQUARE_MEASURE_CHOICES,
-    UNITS_SOLID_MEASURE_CHOICES,
-    UNITS_MASS_CHOICES,
-    UNITS_TIME_CHOICES,
-    UNITS_ELECTRIC_CURRENT_CHOICES,
-    UNITS_TEMPERATURE_CHOICES,
-    UNITS_AMOUNT_OF_SUBSTANCE_CHOICES,
-    UNITS_LUMINOUS_INTENSITY_CHOICES,
+    UNITS_LENGTH,
+    UNITS_SQUARE_MEASURE,
+    UNITS_SOLID_MEASURE,
+    UNITS_MASS,
+    UNITS_TIME,
+    UNITS_ELECTRIC_CURRENT,
+    UNITS_TEMPERATURE,
+    UNITS_AMOUNT_OF_SUBSTANCE,
+    UNITS_LUMINOUS_INTENSITY,
 
-    UNITS_ACCELERATION_CHOICES,
-    UNITS_ANGLE_CHOICES,
-    UNITS_CRACKLE_CHOICES,
-    UNITS_CURRENT_CHOICES,
-    UNITS_DENSITY_CHOICES,
-    UNITS_FORCE_CHOICES,
-    UNITS_INERTIA_TORQUE_CHOICES,
-    UNITS_JERK_CHOICES,
-    UNITS_POTENTIAL_CHOICES,
-    UNITS_SNAP_CHOICES,
-    UNITS_SPEED_CHOICES,
-    UNITS_TORSION_CHOICES,
-    UNITS_TORQUE_CHOICES,
-    UNITS_VELOCITY_CHOICES)
+    UNITS_ACCELERATION,
+    UNITS_ANGLE,
+    UNITS_CRACKLE,
+    UNITS_CURRENT,
+    UNITS_DENSITY,
+    UNITS_FORCE,
+    UNITS_INERTIA_TORQUE,
+    UNITS_JERK,
+    UNITS_POTENTIAL,
+    UNITS_SNAP,
+    UNITS_SPEED,
+    UNITS_TORSION,
+    UNITS_TORQUE,
+    UNITS_VELOCITY)
 
 from unit_field import forms
 
@@ -66,9 +66,22 @@ class CalculatedFloatField(FloatField):
     This field is required to define the special behaviour of the
     pre-calculated field, used in UnitField
     """
+    units = None
+
+    def get_unit_by_id(self, unit_id):
+        """
+        returns the unit factor of the desired unit, e.g.:
+        get_unit_by_id(u'dm²') ---> 0.01
+        """
+        if self.units:
+            for unit in self.units:
+                if unit.id == unit_id:
+                    return unit.factor
+        return None
 
     def __init__(self, *args, **kwargs):
         kwargs['editable'] = False
+        self.units = kwargs.pop('units', None)
         super(CalculatedFloatField, self).__init__(*args, **kwargs)
 
     def pre_save(self, model_instance, add):
@@ -76,7 +89,9 @@ class CalculatedFloatField(FloatField):
         unit_field_name = self.attname.replace('_value', '_unit')
 
         input_value = getattr(model_instance, input_field_name)
-        unit_value = getattr(model_instance, unit_field_name)
+        unit_id = getattr(model_instance, unit_field_name)
+
+        unit_value = self.get_unit_by_id(unit_id)
 
         if (input_value is not None) and (unit_value is not None):
             setattr(model_instance, self.attname, input_value * unit_value)
@@ -90,7 +105,9 @@ class UnitField(FloatField):
     a compound field contributes three columns to the model instead of the
     standard single column
     """
-    choices = [ (1, '?',) ]
+    choices = None
+
+    units = []
 
     auto_convert = True
 
@@ -100,20 +117,51 @@ class UnitField(FloatField):
 
     null = False
 
-    def full_label(self):
-        return u'x = 12.472 m²'
+    default_unit = None
+
+    def update_choices(self):
+        """
+        generates choices list, if not set
+        """
+        if self.choices is None:
+            self.choices = []
+            for unit in self.units:
+                self.choices.append((unit.id, unit.abbrev, ))
+
+    def get_base_unit(self):
+        """
+        returns the unit with factor == 1.0
+        """
+        if self.units:
+            for unit in self.units:
+                if unit.factor == 1.0:
+                    return unit
+        return None
+
+    def get_base_unit_id(self):
+        """
+        returns the identifier of the base unit (e.g. "m²")
+        """
+        base_unit = self.get_base_unit()
+        if base_unit is None:
+            return None
+
+        return base_unit.id
 
     def __init__(self, *args, **kwargs):
         if 'choices' in kwargs:
             raise TypeError("%s invalid attribute 'choices'" % (
                 self.__class__.__name__, ))
-        self.units = kwargs.pop('units', [])
         self.auto_convert = kwargs.pop('auto_convert', True)
         self.verbose_name = kwargs.get('verbose_name')
         self.blank = kwargs.get('blank')
         self.null = kwargs.get('null')
         kwargs['editable'] = False
         kwargs['default'] = 0.
+
+        self.default_unit = kwargs.pop('default_unit',
+            self.get_base_unit_id())
+        self.update_choices()
         super(UnitField, self).__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
@@ -126,10 +174,14 @@ class UnitField(FloatField):
             verbose_name=self.verbose_name)
         cls.add_to_class("%s_input" % (self.name,), self.input_field)
 
-        self.unit_field = FloatField(default=1, choices=self.choices)
+        # self.unit_field = CharField(default=self.default_unit, choices=self.choices)
+        self.unit_field = ModelCharField(max_length=10,
+            default=self.default_unit,
+            choices=self.choices)
         cls.add_to_class("%s_unit" % (self.name,), self.unit_field)
 
         self.value_field = CalculatedFloatField(
+            units=self.units,
             blank=self.blank,
             null=self.null)
         cls.add_to_class("%s_value" % (self.name,), self.value_field)
@@ -154,72 +206,72 @@ class UnitField(FloatField):
 # Fields for Base Units
 
 class LengthField(UnitField):
-    choices = UNITS_LENGTH_CHOICES
+    units = UNITS_LENGTH
 
 class SquareMeasureField(UnitField):
-    choices = UNITS_SQUARE_MEASURE_CHOICES
+    units = UNITS_SQUARE_MEASURE
 
 class SolidMeasureField(UnitField):
-    choices = UNITS_SOLID_MEASURE_CHOICES
+    units = UNITS_SOLID_MEASURE
 
 class MassField(UnitField):
-    choices = UNITS_MASS_CHOICES
+    units = UNITS_MASS
 
 class TimeField(UnitField):
-    choices = UNITS_TIME_CHOICES
+    units = UNITS_TIME
 
 class TemperatureField(UnitField):
-    choices = UNITS_TEMPERATURE_CHOICES
+    units = UNITS_TEMPERATURE
 
 class AmountOfSubstanceField(UnitField):
-    choices = UNITS_AMOUNT_OF_SUBSTANCE_CHOICES
+    units = UNITS_AMOUNT_OF_SUBSTANCE
 
 class LuminousIntensityField(UnitField):
-    choices = UNITS_LUMINOUS_INTENSITY_CHOICES
+    units = UNITS_LUMINOUS_INTENSITY
 
 # Fields for Derived Units
 
 class AccelerationField(UnitField):
-    choices = UNITS_ACCELERATION_CHOICES
+    units = UNITS_ACCELERATION
 
 class AngleField(UnitField):
-    choices = UNITS_ANGLE_CHOICES
+    units = UNITS_ANGLE
 
 class CrackleField(UnitField):
-    choices = UNITS_CRACKLE_CHOICES
+    units = UNITS_CRACKLE
 
 class CurrentField(UnitField):
-    choices = UNITS_CURRENT_CHOICES
+    units = UNITS_CURRENT
 
 class DensityField(UnitField):
-    choices = UNITS_DENSITY_CHOICES
+    units = UNITS_DENSITY
 
 class ForceField(UnitField):
-    choices = UNITS_FORCE_CHOICES
+    units = UNITS_FORCE
 
 class InertiaTorqueField(UnitField):
-    choices = UNITS_INERTIA_TORQUE_CHOICES
+    units = UNITS_INERTIA_TORQUE
 
 class JerkField(UnitField):
-    choices = UNITS_JERK_CHOICES
+    units = UNITS_JERK
 
 class PotentialField(UnitField):
-    choices = UNITS_POTENTIAL_CHOICES
+    units = UNITS_POTENTIAL
 
 class SnapField(UnitField):
-    choices = UNITS_SNAP_CHOICES
+    units = UNITS_SNAP
 
 class SpeedField(UnitField):
-    choices = UNITS_SPEED_CHOICES
+    units = UNITS_SPEED
 
 class TorqueField(UnitField):
-    choices = UNITS_TORQUE_CHOICES
+    units = UNITS_TORQUE
 
 class VelocityField(UnitField):
-    choices = UNITS_VELOCITY_CHOICES
+    units = UNITS_VELOCITY
 
 class TorsionField(UnitField):
-    choices = UNITS_TORSION_CHOICES
+    units = UNITS_TORSION
 
 try:
     from south.modelsinspector import add_introspection_rules

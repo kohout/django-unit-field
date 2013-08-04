@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
+from django.utils.translation import ugettext as _
 import math
 
 class Unit(object):
-    def __init__(self, factor, abbrev, label):
-        self.factor = factor
+    def __init__(self, id, abbrev, label, factor=None):
+        self.id  = id
         self.abbrev = abbrev
         self.label = label
+        if factor is None:
+            self.factor = id
+        else:
+            self.factor = factor
 
 class UnitValue(object):
     def __init__(self, input, unit):
@@ -39,73 +44,73 @@ def get_choices(units):
     """
     unit_choices = []
     for unit in units:
-        unit_choices.append((unit.factor, unit.abbrev, ))
+        unit_choices.append((unit.id, unit.abbrev, ))
 
     return unit_choices
 
 UNITS_LENGTH = [
-    Unit(0.001, 'mm', 'milimetre' ),
-    Unit(0.01,  'cm', 'centimetre'),
-    Unit(0.1,   'dm', 'decimetre' ),
-    Unit(1,     'm',  'metre'     ),
-    Unit(1000,  'km', 'kilometre' ),
+    Unit(u'mm',   _(u'mm'),   _(u'milimetre' ),   0.001, ),
+    Unit(u'cm',   _(u'cm'),   _(u'centimetre'),   0.01,  ),
+    Unit(u'dm',   _(u'dm'),   _(u'decimetre' ),   0.1,   ),
+    Unit(u'm',    _(u'm'),    _(u'metre'     ),   1,     ),
+    Unit(u'km',   _(u'km'),   _(u'kilometre' ),   1000,  ),
 ]
 
 UNITS_SQUARE_MEASURE = [
-    Unit(0.000001, 'mm²', 'square milimetre' ),
-    Unit(0.0001,   'cm²', 'square centimetre'),
-    Unit(0.01,     'dm²', 'square decimetre' ),
-    Unit(1,        'm²',  'square metre'     ),
-    Unit(100,      'a',   'square decametre' ),
-    Unit(10000,    'ha',  'square hectometre'),
-    Unit(1000000,  'km²', 'square kilometre' ),
+    Unit(u'mm²',  _(u'mm²'),  _(u'square milimetre'),  0.000001, ),
+    Unit(u'cm²',  _(u'cm²'),  _(u'square centimetre'), 0.0001,   ),
+    Unit(u'dm²',  _(u'dm²'),  _(u'square decimetre'),  0.01,     ),
+    Unit(u'm²',   _(u'm²'),   _(u'square metre'),      1,        ),
+    Unit(u'a',    _(u'a'),    _(u'square decametre'),  100,      ),
+    Unit(u'ha',   _(u'ha'),   _(u'square hectometre'), 10000,    ),
+    Unit(u'km²',  _(u'km²'),  _(u'square kilometre'),  1000000,  ),
 ]
 
 UNITS_SOLID_MEASURE = [
-    Unit(0.000000001, 'mm³',  'cubic milimetre' ),
-    Unit(0.000001,    'cm³',  'cubic centimetre'),
-    Unit(0.001,       'dm³',  'cubic decimetre' ),
-    Unit(1,           'm³',   'cubic meter'     ),
-    Unit(1000,        'dam³', 'cubic decametre' ),
-    Unit(1000000,     'hm³',  'cubic hectometre'),
-    Unit(1000000000,  'km³',  'cubic kilometre' ),
+    Unit(u'mm³',  _(u'mm³'),  _(u'cubic milimetre') ,  0.000000001, ),
+    Unit(u'cm³',  _(u'cm³'),  _(u'cubic centimetre'),  0.000001,    ),
+    Unit(u'dm³',  _(u'dm³'),  _(u'cubic decimetre'),   0.001,       ),
+    Unit(u'm³',   _(u'm³'),   _(u'cubic meter'),       1,           ),
+    Unit(u'dam³', _(u'dam³'), _(u'cubic decametre'),   1000,        ),
+    Unit(u'hm³',  _(u'hm³'),  _(u'cubic hectometre'),  1000000,     ),
+    Unit(u'km³',  _(u'km³'),  _(u'cubic kilometre'),   1000000000,  ),
 ]
 
 UNITS_MASS = [
-    Unit(0.000001, 'µg',  'microgram'       ),
-    Unit(0.001,    'mg',  'milligram'       ),
-    Unit(1,        'g',   'gram'            ),
-    Unit(100,      'dag', 'decagram'        ),
-    Unit(1000,     'kg',  'kilogram'        ),
-    Unit(1000000,  't',   'tonne'           ),
+    Unit(u'µg',   _(u'µg'),   _(u'microgram'),     0.000001,   ),
+    Unit(u'mg',   _(u'mg'),   _(u'milligram'),     0.001,      ),
+    Unit(u'g',    _(u'g'),    _(u'gram')     ,     1,          ),
+    Unit(u'dag',  _(u'dag'),  _(u'decagram') ,     100,        ),
+    Unit(u'kg',   _(u'kg'),   _(u'kilogram') ,     1000,       ),
+    Unit(u't',    _(u't'),    _(u'tonne')    ,     1000000,    ),
 ]
 
 UNITS_TIME = [
-    Unit(0.000001, 'µg',  'microsecond' ),
-    Unit(0.001,    'ms',  'millisecond' ),
-    Unit(1,        's',   'second'      ),
-    Unit(60,       'min', 'minute'      ),
-    Unit(3600,     'h',   'hour'        ),
-    Unit(86400,    'd',   'day'         ),
+    Unit(u'µs',  _(u'µs'),  _(u'microseconds'), 0.000001, ),
+    Unit(u'ms',  _(u'ms'),  _(u'millisecond'),  0.001,    ),
+    Unit(u's',   _(u's'),   _(u'second'),       1,        ),
+    Unit(u'min', _(u'min'), _(u'minute'),       60,       ),
+    Unit(u'h',   _(u'h'),   _(u'hour'),         3600,     ),
+    Unit(u'd',   _(u'd'),   _(u'day'),          86400,    ),
 ]
 
 UNITS_ELECTRIC_CURRENT = [
-    Unit(0.000001, 'µA', 'microampere'  ),
-    Unit(0.001,    'mA', 'milliampere'  ),
-    Unit(1,        'A',  'ampere'       ),
-    Unit(1000,     'kA', 'kiloampere'   ),
+    Unit(u'µA',  _(u'µA'),  _(u'microampere'),  0.000001, ),
+    Unit(u'mA',  _(u'mA'),  _(u'milliampere'),  0.001,    ),
+    Unit(u'A',   _(u'A'),   _(u'ampere')     ,  1,        ),
+    Unit(u'kA',  _(u'kA'),  _(u'kiloampere') ,  1000,     ),
 ]
 
 UNITS_TEMPERATURE = [
-    Unit(1,        'K',  'kelvin'       ),
+    Unit(u'K',      _(u'K'),    _(u'kelvin'),   1 ),
 ]
 
 UNITS_AMOUNT_OF_SUBSTANCE = [
-    Unit(1,        'mol', 'mole'        ),
+    Unit(u'mol',    _(u'mol'),  _(u'mole'),     1 ),
 ]
 
 UNITS_LUMINOUS_INTENSITY = [
-    Unit(1,        'cd', 'candela'      ),
+    Unit(u'cd',     _(u'cd'),   _(u'candela'),  1 ),
 ]
 
 # base units (SI system)
@@ -123,64 +128,64 @@ UNITS_LUMINOUS_INTENSITY_CHOICES = get_choices(UNITS_LUMINOUS_INTENSITY)
 # derived units
 
 UNITS_ANGLE = [
-    Unit(1,                      'rad',  'Radians'    ),
-    Unit(0.0174532925199,   '°',    'Degrees'    ), # * math.pi / 180
-    Unit(0.0157079632679,   'grad', 'Grads'      ), # * math.pi / 200
+    Unit(u'rad',    _(u'rad'),  _(u'Radians'),  1 ),
+    Unit(u'deg',    _(u'°'),    _(u'Degrees'),  math.pi / 180 ),
+    Unit(u'grad',   _(u'grad'), _(u'Grads'),    math.pi / 200 ),
 ]
 
 UNITS_DENSITY = [
-    Unit(1,        'kg/m³',  'kg/m³'),
+    Unit(u'kg/m³',   _(u'kg/m³'),   _(u'kg/m³'),    1 ),
 ]
 
 UNITS_FORCE = [
-    Unit(1,        'N',  'Newton'),
+    Unit(u'N',   _(u'N'),   _(u'Newton'),    1 ),
 ]
 
 UNITS_SPEED = [
-    Unit(1,        '1/min', 'rotation per minute'),
+    Unit(u'1/min',   _(u'1/min'),   _(u'rotation per minute'),    1 ),
 ]
 
 UNITS_TORQUE = [
-    Unit(1,        'Nm', 'Newtonmeter'),
+    Unit(u'Nm',   _(u'Nm'),   _(u'Newtonmeter'),    1 ),
 ]
 
 UNITS_VELOCITY = [
-    Unit(1,        'm/s',  'metres per second'),
-    Unit(3.6,      'km/h', 'kilometres per hour'),
+    Unit(u'm/s',    _(u'm/s'),    _(u'metres per second'),      1 ),
+    Unit(u'km/h',   _(u'km/h'),   _(u'kilometres per hour'),    1 ),
 ]
 
 UNITS_ACCELERATION = [
-    Unit(1,        'm/s²',  u'm/s²'),
+    Unit(u'm/s²',  _(u'm/s²'),  _(u'm/s²'),     1),
 ]
 
 UNITS_CURRENT = [
-    Unit(0.001,       'mA',  u'milli ampere'),
-    Unit(1,            'A',  u'ampere'),
+    Unit(u'mA',     _(u'mA'),  _(u'milli ampere'),  0.001),
+    Unit(u'A',      _(u'A'),    (u'ampere'),        1),
 ]
 
 UNITS_POTENTIAL = [
-    Unit(1,        'V',  u'volt'),
+    Unit(u'V',      _(u'V'),  _(u'volt'),  1),
 ]
 
 UNITS_JERK = [
-    Unit(1,        'm/s³',  u'm/s³'),
+    Unit(u'm/s³',   _(u'm/s³'),     _(u'm/s³'),     1),
 ]
 
 UNITS_SNAP = [
-    Unit(1,        'm/s⁴',  u'm/s⁴'),
+    Unit(u'm/s⁴',   _(u'm/s⁴'),     _(u'm/s⁴'),     1),
 ]
 
 UNITS_CRACKLE = [
-    Unit(1,        'm/s⁵',  u'm/s⁵'),
+    Unit(u'm/s⁵',   _(u'm/s⁵'),     _(u'm/s⁵'),     1),
 ]
 
 UNITS_INERTIA_TORQUE = [
-    Unit(1,         'kgm²',  u'kgm²' ),
-    Unit(0.0001,    'kgcm²', u'kgcm²'),
+    Unit(u'kgm²',   _(u'kgm²'),     _(u'kgm²'),     1 ),
+    Unit(u'kgcm²',  _(u'kgcm²'),    _(u'kgcm²'),    0.0001 ),
 ]
 
 UNITS_TORSION = [
-    Unit(1,         'Nm/arcmin', u'Nm/arcmin'),
+    Unit(u'Nm/arcmin',  _(u'Nm/arcmin'),    _(u'Nm/arcmin'),    1),
 ]
 
 UNITS_ACCELERATION_CHOICES = get_choices(UNITS_ACCELERATION)
