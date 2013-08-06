@@ -2,6 +2,20 @@
 from django.utils.translation import ugettext as _
 import math
 
+def convert_unit(value, units, abbrev_in, abbrev_out):
+    # if units are identical
+    if abbrev_in == abbrev_out:
+        return value
+
+    #retrieve conversion factors
+    for unit in units:
+        if unit.abbrev == abbrev_in:
+            f1 = unit.factor
+        if unit.abbrev == abbrev_out:
+            f2 = unit.factor
+
+    return value * f1 / f2
+
 class Unit(object):
     def __init__(self, id, abbrev, label, factor=None):
         self.id  = id
