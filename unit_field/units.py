@@ -3,6 +3,10 @@ from django.utils.translation import ugettext as _
 import math
 
 def convert_unit(value, units, abbrev_in, abbrev_out):
+    print "value", value
+    print "units", units
+    print "abbrev_in", abbrev_in
+    print "abbrev_out", abbrev_out
     # if units are identical
     if abbrev_in == abbrev_out:
         return value
@@ -68,6 +72,23 @@ UNITS_LENGTH = [
     Unit(u'dm',   _(u'dm'),   _(u'decimetre' ),   0.1,   ),
     Unit(u'm',    _(u'm'),    _(u'metre'     ),   1,     ),
     Unit(u'km',   _(u'km'),   _(u'kilometre' ),   1000,  ),
+]
+
+UNITS_LENGTH_SMALL = [
+    Unit(u'μm',   _(u'μm'),   _(u'micrometre'),  0.000001, ),
+    Unit(u'nm',   _(u'nm'),   _(u'nanometre'),   0.000000001,  ),
+    Unit(u'pm',   _(u'pm'),   _(u'pikometre'),   0.000000000001,   ),
+]
+
+UNITS_LENGTH_BRITISH = [
+    Unit(u'in',   _(u'"'),   _(u'inch' ),      0.0254, ),
+    Unit(u'ft',   _(u'ft'),  _(u'feet'),       0.3048, ),
+    Unit(u'sm',   _(u'sm'),  _(u'sm' ),     1852.0,    ),
+    Unit(u'mi',   _(u'mi'),  _(u'mi' ),     1609.344,  ),
+]
+
+UNITS_LENGTH_SCIENCE = [
+    Unit(u'AE',   _(u'AE'),   _(u'Astronomische Einheit' ), 149597870691, ),
 ]
 
 UNITS_SQUARE_MEASURE = [
