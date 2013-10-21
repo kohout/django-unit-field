@@ -163,9 +163,11 @@ UNITS_LUMINOUS_INTENSITY_CHOICES = get_choices(UNITS_LUMINOUS_INTENSITY)
 # derived units
 
 UNITS_ANGLE = [
-    Unit(u'rad',    _(u'rad'),  _(u'Radians'),  1 ),
-    Unit(u'deg',    _(u'°'),    _(u'Degrees'),  math.pi / 180 ),
-    Unit(u'grad',   _(u'grad'), _(u'Grads'),    math.pi / 200 ),
+    Unit(u'rad',    _(u'rad'),    _(u'Radians'),  1 ),
+    Unit(u'deg',    _(u'°'),      _(u'Degrees'),  math.pi / 180 ),
+    Unit(u'grad',   _(u'grad'),   _(u'Grads'),    math.pi / 200 ),
+    Unit(u'arcmin', _(u'arcmin'), _(u'arcmin'),  math.pi / (180 * 60) ),
+    Unit(u'arcsec', _(u'arcsec'), _(u'arcsec'),  math.pi / (180 * 60 * 60) ),
 ]
 
 UNITS_DENSITY = [
@@ -174,6 +176,7 @@ UNITS_DENSITY = [
 
 UNITS_FORCE = [
     Unit(u'N',   _(u'N'),   _(u'Newton'),    1 ),
+    Unit(u'kN',   _(u'kN'),   _(u'Kilonewton'),    1000 ),
 ]
 
 UNITS_SPEED = [
@@ -223,6 +226,49 @@ UNITS_TORSION = [
     Unit(u'Nm/arcmin',  _(u'Nm/arcmin'),    _(u'Nm/arcmin'),    1),
 ]
 
+# Electrical Units
+
+UNITS_POWER = [
+    Unit(u'W',   _(u'W'),     _(u'watt'),     1),
+]
+
+UNITS_THERMAL_RESISTANCE = [
+    Unit(u'm²K/W',   _(u'm²K/W'),     _(u'm²K/W'),     1),
+]
+
+UNITS_MOTOR_CONSTANT = [
+    Unit(u'Nm/W^(1/2)',   _(u'Nm/W^(1/2)'),     _(u'Nm/W^(1/2)'),     1),
+]
+
+UNITS_FORCE_CONSTANT = [
+    Unit(u'N/A',   _(u'N/A'),     _(u'N/A'),     1),
+]
+
+UNITS_POTENTIAL_CONSTANT = [
+    Unit(u'Vs/m',   _(u'Vs/m'),     _(u'Vs/m'),     1),
+]
+
+UNITS_ELECTRICAL_TIME_CONSTANT = [
+    Unit(u'ms',   _(u'ms'),     _(u'ms'),     1),
+]
+
+UNITS_ELECTRICAL_RESISTANCE = [
+    Unit(u'Ω',   _(u'Ω'),     _(u'ohm'),     1),
+]
+
+UNITS_INDUCTANCE = [
+    Unit(u'mH',   _(u'mH'),     _(u'mH'),     1),
+]
+
+UNITS_THERMAL_RESISTANCE_CHOICES = get_choices(UNITS_THERMAL_RESISTANCE)
+UNITS_MOTOR_CONSTANT_CHOICES = get_choices(UNITS_MOTOR_CONSTANT)
+UNITS_FORCE_CONSTANT_CHOICES = get_choices(UNITS_FORCE_CONSTANT)
+UNITS_POTENTIAL_CONSTANT_CHOICES = get_choices(UNITS_POTENTIAL_CONSTANT)
+UNITS_ELECTRICAL_TIME_CONSTANT_CHOICES = get_choices(
+    UNITS_ELECTRICAL_TIME_CONSTANT)
+UNITS_ELECTRICAL_RESISTANCE_CHOICES = get_choices(UNITS_ELECTRICAL_RESISTANCE)
+UNITS_INDUCTANCE_CHOICES = get_choices(UNITS_INDUCTANCE)
+
 UNITS_ACCELERATION_CHOICES = get_choices(UNITS_ACCELERATION)
 UNITS_ANGLE_CHOICES = get_choices(UNITS_ANGLE)
 UNITS_CRACKLE_CHOICES = get_choices(UNITS_CRACKLE)
@@ -233,6 +279,7 @@ UNITS_INERTIA_TORQUE_CHOICES = get_choices(
     UNITS_INERTIA_TORQUE)
 UNITS_JERK_CHOICES = get_choices(UNITS_JERK)
 UNITS_POTENTIAL_CHOICES = get_choices(UNITS_POTENTIAL)
+UNITS_POWER_CHOICES = get_choices(UNITS_POWER)
 UNITS_SNAP_CHOICES = get_choices(UNITS_SNAP)
 UNITS_SPEED_CHOICES = get_choices(UNITS_SPEED)
 UNITS_TORQUE_CHOICES = get_choices(UNITS_TORQUE)

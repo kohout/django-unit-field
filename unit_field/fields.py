@@ -25,7 +25,17 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_SPEED,
     UNITS_TORSION,
     UNITS_TORQUE,
-    UNITS_VELOCITY)
+    UNITS_VELOCITY,
+
+    UNITS_POWER,
+    UNITS_THERMAL_RESISTANCE,
+    UNITS_MOTOR_CONSTANT,
+    UNITS_FORCE_CONSTANT,
+    UNITS_ELECTRICAL_TIME_CONSTANT,
+    UNITS_POTENTIAL_CONSTANT,
+    UNITS_ELECTRICAL_RESISTANCE,
+    UNITS_INDUCTANCE)
+
 
 from unit_field import forms
 
@@ -272,6 +282,30 @@ class VelocityField(UnitField):
 
 class TorsionField(UnitField):
     units = UNITS_TORSION
+
+class PowerField(UnitField):
+    units = UNITS_POWER
+
+class ThermalResistanceField(UnitField):
+    units = UNITS_THERMAL_RESISTANCE
+
+class ElectricalTimeConstantField(UnitField):
+    units = UNITS_ELECTRICAL_TIME_CONSTANT
+
+class MotorConstantField(UnitField):
+    units = UNITS_MOTOR_CONSTANT
+
+class ForceConstantField(UnitField):
+    units = UNITS_FORCE_CONSTANT
+
+class PotentialConstantField(UnitField):
+    units = UNITS_POTENTIAL_CONSTANT
+
+class ResistanceField(UnitField):
+    units = UNITS_ELECTRICAL_RESISTANCE
+
+class InductanceField(UnitField):
+    units = UNITS_INDUCTANCE
 
 try:
     from south.modelsinspector import add_introspection_rules
