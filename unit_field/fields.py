@@ -94,7 +94,7 @@ class CalculatedFloatField(FloatField):
         returns the unit factor of the desired unit, e.g.:
         get_unit_by_id(u'dm²') ---> 0.01
         """
-        get_factor(self.units, unit_id)
+        return get_factor(self.units, unit_id)
 
     def __init__(self, *args, **kwargs):
         kwargs['editable'] = False
