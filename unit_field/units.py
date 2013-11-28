@@ -3,10 +3,6 @@ from django.utils.translation import ugettext as _
 import math
 
 def convert_unit(value, units, abbrev_in, abbrev_out):
-    print "value", value
-    print "units", units
-    print "abbrev_in", abbrev_in
-    print "abbrev_out", abbrev_out
     # if units are identical
     if abbrev_in == abbrev_out:
         return value

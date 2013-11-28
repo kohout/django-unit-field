@@ -47,6 +47,17 @@ except ImportError:
 def md5_hexdigest(value):
     return md5(value).hexdigest()
 
+def get_factor(units, unit_id):
+    """
+    Returns the factor of a Unit-Config
+    """
+    if not units:
+        return None
+
+    for unit in units:
+        if unit.id == unit_id:
+            return unit.factor
+
 class UnitInputField(FloatField):
 
     auto_convert = True
@@ -83,16 +94,13 @@ class CalculatedFloatField(FloatField):
         returns the unit factor of the desired unit, e.g.:
         get_unit_by_id(u'dm²') ---> 0.01
         """
-        if self.units:
-            for unit in self.units:
-                if unit.id == unit_id:
-                    return unit.factor
-        return None
+        get_factor(self.units, unit_id)
 
     def __init__(self, *args, **kwargs):
         kwargs['editable'] = False
         self.units = kwargs.pop('units', None)
         super(CalculatedFloatField, self).__init__(*args, **kwargs)
+        self.default = 0.0
 
     def pre_save(self, model_instance, add):
         input_field_name = self.attname.replace('_value', '_input')
@@ -128,6 +136,8 @@ class UnitField(FloatField):
     null = False
 
     default_unit = None
+
+    validators = []
 
     def update_choices(self):
         """
@@ -166,6 +176,7 @@ class UnitField(FloatField):
         self.verbose_name = kwargs.get('verbose_name')
         self.blank = kwargs.get('blank')
         self.null = kwargs.get('null')
+        self.validators = kwargs.get('validators', [])
         kwargs['editable'] = False
         kwargs['default'] = 0.
 
@@ -181,6 +192,7 @@ class UnitField(FloatField):
             blank=self.blank,
             null=self.null,
             auto_convert=self.auto_convert,
+            validators=self.validators,
             verbose_name=self.verbose_name)
         cls.add_to_class("%s_input" % (self.name,), self.input_field)
 
@@ -190,7 +202,7 @@ class UnitField(FloatField):
             choices=self.choices)
         cls.add_to_class("%s_unit" % (self.name,), self.unit_field)
 
-        self.value_field = CalculatedFloatField(
+        self.value_field = CalculatedFloatField(default=0.0,
             units=self.units,
             blank=self.blank,
             null=self.null)
