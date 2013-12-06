@@ -13,8 +13,8 @@ class UnitModelMixin(object):
             _method_name = u'get_%s_display' % _unit_field
             _unit_method = getattr(self, _method_name)
             return mark_safe(u'<div class="row-fluid">' \
-                '<div class="span6">%s:</div>' \
-                '<div class="span6"><strong>%s %s</strong></div>' \
+                '<div class="span6"><span class="readonly-label">%s:</span></div>' \
+                '<div class="span6"><strong class="readonly-value">%s %s</strong></div>' \
                 '</div>' % (
                 _label, _val, _unit_method(), ))
 

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.utils import formats
 from django.db.models import FloatField, CharField as ModelCharField
 from django.forms import CharField
 from unit_field.units import (Unit, UnitValueCreator,
@@ -68,6 +69,15 @@ class UnitInputField(FloatField):
             self.auto_convert = auto_convert
         super(UnitInputField, self).__init__(*args, **kwargs)
 
+    def to_python(self, value):
+        """
+        Validates that float() can be called on the input. Returns the result
+        of float(). Returns None for empty values.
+        """
+        value = super(FloatField, self).to_python(value)
+        value = formats.sanitize_separators(value)
+        return value
+
     def get_prep_value(self, value):
         try:
             return float(value)
@@ -106,12 +116,12 @@ class CalculatedFloatField(FloatField):
         input_field_name = self.attname.replace('_value', '_input')
         unit_field_name = self.attname.replace('_value', '_unit')
 
-        input_value = getattr(model_instance, input_field_name)
+        input_value = float(getattr(model_instance, input_field_name))
         unit_id = getattr(model_instance, unit_field_name)
 
         unit_value = self.get_unit_by_id(unit_id)
 
-        if (input_value is not None) and (unit_value is not None):
+        if (not input_value is None) and (not unit_value is None):
             setattr(model_instance, self.attname, input_value * unit_value)
         else:
             setattr(model_instance, self.attname, 0.0)
