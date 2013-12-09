@@ -222,6 +222,39 @@ UNITS_TORSION = [
     Unit(u'Nm/arcmin',  _(u'Nm/arcmin'),    _(u'Nm/arcmin'),    1),
 ]
 
+
+
+UNITS_ANGLE_VELOCITY = [
+    Unit(u'rad/s',    _(u'rad/s'),    _(u'Radians/s'),  1 ),
+    Unit(u'deg/s',    _(u'°/s'),      _(u'Degrees/s'),  math.pi / 180 ),
+    Unit(u'grad/s',   _(u'grad/s'),   _(u'Grads/s'),    math.pi / 200 ),
+]
+
+UNITS_ANGLE_ACCELERATION = [
+    Unit(u'rad/s²',    _(u'rad/s²'),    _(u'Radians/s²'),  1 ),
+    Unit(u'deg/s²',    _(u'°/s²'),      _(u'Degrees/s²'),  math.pi / 180 ),
+    Unit(u'grad/s²',   _(u'grad/s²'),   _(u'Grads/s²'),    math.pi / 200 ),
+]
+
+UNITS_ANGLE_JERK = [
+    Unit(u'rad/s³',    _(u'rad/s³'),    _(u'Radians/s³'),  1 ),
+    Unit(u'deg/s³',    _(u'°/s³'),      _(u'Degrees/s³'),  math.pi / 180 ),
+    Unit(u'grad/s³',   _(u'grad/s³'),   _(u'Grads/s³'),    math.pi / 200 ),
+]
+
+UNITS_ANGLE_SNAP = [
+    Unit(u'rad/s⁴',    _(u'rad/s⁴'),    _(u'Radians/s⁴'),  1 ),
+    Unit(u'deg/s⁴',    _(u'°/s⁴'),      _(u'Degrees/s⁴'),  math.pi / 180 ),
+    Unit(u'grad/s⁴',   _(u'grad/s⁴'),   _(u'Grads/s⁴'),    math.pi / 200 ),
+]
+
+UNITS_ANGLE_CRACKLE = [
+    Unit(u'rad/s⁵',    _(u'rad/s⁵'),    _(u'Radians/s⁵'),  1 ),
+    Unit(u'deg/s⁵',    _(u'°/s⁵'),      _(u'Degrees/s⁵'),  math.pi / 180 ),
+    Unit(u'grad/s⁵',   _(u'grad/s⁵'),   _(u'Grads/s⁵'),    math.pi / 200 ),
+]
+
+
 # Electrical Units
 
 UNITS_POWER = [
@@ -281,3 +314,9 @@ UNITS_SPEED_CHOICES = get_choices(UNITS_SPEED)
 UNITS_TORQUE_CHOICES = get_choices(UNITS_TORQUE)
 UNITS_VELOCITY_CHOICES = get_choices(UNITS_VELOCITY)
 UNITS_TORSION_CHOICES = get_choices(UNITS_TORSION)
+
+UNITS_ANGLE_VELOCITY_CHOICES = get_choices(UNITS_ANGLE_VELOCITY)
+UNITS_ANGLE_ACCELERATION_CHOICES = get_choices(UNITS_ANGLE_ACCELERATION)
+UNITS_ANGLE_JERK_CHOICES = get_choices(UNITS_ANGLE_JERK)
+UNITS_ANGLE_SNAP_CHOICES = get_choices(UNITS_ANGLE_SNAP)
+UNITS_ANGLE_CRACKLE_CHOICES = get_choices(UNITS_ANGLE_CRACKLE)

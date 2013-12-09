@@ -35,7 +35,14 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_ELECTRICAL_TIME_CONSTANT,
     UNITS_POTENTIAL_CONSTANT,
     UNITS_ELECTRICAL_RESISTANCE,
-    UNITS_INDUCTANCE)
+    UNITS_INDUCTANCE,
+
+    UNITS_ANGLE_VELOCITY,
+    UNITS_ANGLE_ACCELERATION,
+    UNITS_ANGLE_JERK,
+    UNITS_ANGLE_SNAP,
+    UNITS_ANGLE_CRACKLE,
+)
 
 
 from unit_field import forms
@@ -328,6 +335,21 @@ class ResistanceField(UnitField):
 
 class InductanceField(UnitField):
     units = UNITS_INDUCTANCE
+
+class AngleVelocityField(UnitField):
+    units = UNITS_ANGLE_VELOCITY
+
+class AngleAccelerationField(UnitField):
+    units = UNITS_ANGLE_ACCELERATION
+
+class AngleJerkField(UnitField):
+    units = UNITS_ANGLE_JERK
+
+class AngleSnapField(UnitField):
+    units = UNITS_ANGLE_SNAP
+
+class AngleCrackleField(UnitField):
+    units = UNITS_ANGLE_CRACKLE
 
 try:
     from south.modelsinspector import add_introspection_rules
