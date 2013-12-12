@@ -167,7 +167,8 @@ UNITS_ANGLE = [
 ]
 
 UNITS_DENSITY = [
-    Unit(u'kg/m³',   _(u'kg/m³'),   _(u'kg/m³'),    1 ),
+    Unit(u'kg/m³',    _(u'kg/m³'),    _(u'kg/m³'),     1 ),
+    Unit(u'kg/dm³',   _(u'kg/dm³'),   _(u'kg/dm³'),    1000 ),
 ]
 
 UNITS_FORCE = [
