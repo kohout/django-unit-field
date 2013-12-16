@@ -217,6 +217,7 @@ UNITS_CRACKLE = [
 UNITS_INERTIA_TORQUE = [
     Unit(u'kgm²',   _(u'kgm²'),     _(u'kgm²'),     1 ),
     Unit(u'kgcm²',  _(u'kgcm²'),    _(u'kgcm²'),    0.0001 ),
+    Unit(u'kgmm²',  _(u'kgmm²'),    _(u'kgmm²'),    0.000001 ),
 ]
 
 UNITS_TORSION = [
