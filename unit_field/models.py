@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
 
 class UnitModelMixin(object):
 
     def __getattr__(self, name):
         if name.endswith('_html'):
             _field = name.replace('_html', '_input')
-            _label = self._meta.get_field(_field).verbose_name
+            _label = _(self._meta.get_field(_field).verbose_name)
 
             _unit_field = name.replace('_html', '_unit')
             _val = getattr(self, _field)

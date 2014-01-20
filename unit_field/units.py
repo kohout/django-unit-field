@@ -161,9 +161,10 @@ UNITS_LUMINOUS_INTENSITY_CHOICES = get_choices(UNITS_LUMINOUS_INTENSITY)
 UNITS_ANGLE = [
     Unit(u'rad',    _(u'rad'),    _(u'Radians'),  1 ),
     Unit(u'deg',    _(u'°'),      _(u'Degrees'),  math.pi / 180 ),
-    Unit(u'grad',   _(u'grad'),   _(u'Grads'),    math.pi / 200 ),
+    # Unit(u'grad',   _(u'grad'),   _(u'Grads'),    math.pi / 200 ),
     Unit(u'arcmin', _(u'arcmin'), _(u'arcmin'),  math.pi / (180 * 60) ),
     Unit(u'arcsec', _(u'arcsec'), _(u'arcsec'),  math.pi / (180 * 60 * 60) ),
+    Unit(u'rotation', _(u'rot.'), _(u'rot.'), 1 / (math.pi * 2.0)),
 ]
 
 UNITS_DENSITY = [
@@ -229,31 +230,39 @@ UNITS_TORSION = [
 UNITS_ANGLE_VELOCITY = [
     Unit(u'rad/s',    _(u'rad/s'),    _(u'Radians/s'),  1 ),
     Unit(u'deg/s',    _(u'°/s'),      _(u'Degrees/s'),  math.pi / 180 ),
-    Unit(u'grad/s',   _(u'grad/s'),   _(u'Grads/s'),    math.pi / 200 ),
+    Unit(u'rps',      _(u'rps'),      _(u'rps'), 1.0 / (math.pi * 2.0)),
+    Unit(u'rpm',      _(u'rpm'),      _(u'rpm'), 60.0 / (math.pi * 2.0)),
 ]
 
 UNITS_ANGLE_ACCELERATION = [
     Unit(u'rad/s²',    _(u'rad/s²'),    _(u'Radians/s²'),  1 ),
     Unit(u'deg/s²',    _(u'°/s²'),      _(u'Degrees/s²'),  math.pi / 180 ),
-    Unit(u'grad/s²',   _(u'grad/s²'),   _(u'Grads/s²'),    math.pi / 200 ),
+    Unit(u'rps²',      _(u'rps²'),      _(u'rps²'), 1.0 / (math.pi * 2.0)),
+    Unit(u'rpm²',      _(u'rpm²'),      _(u'rps²'), 60.0 / (math.pi * 2.0)),
 ]
 
 UNITS_ANGLE_JERK = [
     Unit(u'rad/s³',    _(u'rad/s³'),    _(u'Radians/s³'),  1 ),
     Unit(u'deg/s³',    _(u'°/s³'),      _(u'Degrees/s³'),  math.pi / 180 ),
-    Unit(u'grad/s³',   _(u'grad/s³'),   _(u'Grads/s³'),    math.pi / 200 ),
+    Unit(u'rps³',      _(u'rps³'),      _(u'rps³'), 1.0 / (math.pi * 2.0)),
+    Unit(u'rpm³',      _(u'rpm³'),      _(u'rpm³'), 60.0 / (math.pi * 2.0)),
 ]
+    #Unit(u'grad/s³',   _(u'grad/s³'),   _(u'Grads/s³'),    math.pi / 200 ),
 
 UNITS_ANGLE_SNAP = [
     Unit(u'rad/s⁴',    _(u'rad/s⁴'),    _(u'Radians/s⁴'),  1 ),
     Unit(u'deg/s⁴',    _(u'°/s⁴'),      _(u'Degrees/s⁴'),  math.pi / 180 ),
-    Unit(u'grad/s⁴',   _(u'grad/s⁴'),   _(u'Grads/s⁴'),    math.pi / 200 ),
+    #Unit(u'grad/s⁴',   _(u'grad/s⁴'),   _(u'Grads/s⁴'),    math.pi / 200 ),
+    Unit(u'rps⁴',      _(u'rps⁴'),      _(u'rps⁴'), 1.0 / (math.pi * 2.0)),
+    Unit(u'rpm⁴',      _(u'rpm⁴'),      _(u'rpm⁴'), 60.0 / (math.pi * 2.0)),
 ]
 
 UNITS_ANGLE_CRACKLE = [
     Unit(u'rad/s⁵',    _(u'rad/s⁵'),    _(u'Radians/s⁵'),  1 ),
     Unit(u'deg/s⁵',    _(u'°/s⁵'),      _(u'Degrees/s⁵'),  math.pi / 180 ),
-    Unit(u'grad/s⁵',   _(u'grad/s⁵'),   _(u'Grads/s⁵'),    math.pi / 200 ),
+    #Unit(u'grad/s⁵',   _(u'grad/s⁵'),   _(u'Grads/s⁵'),    math.pi / 200 ),
+    Unit(u'rps⁵',      _(u'rps⁵'),      _(u'rps⁵'), 1.0 / (math.pi * 2.0)),
+    Unit(u'rpm⁵',      _(u'rpm⁵'),      _(u'rpm⁵'), 60.0 / (math.pi * 2.0)),
 ]
 
 
