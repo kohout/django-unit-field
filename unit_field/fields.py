@@ -88,7 +88,7 @@ class UnitInputField(FloatField):
     def get_prep_value(self, value):
         try:
             return float(value)
-        except TypeError, ValueError:
+        except (TypeError, ValueError):
             return 0.0
 
     def formfield(self, **kwargs):
