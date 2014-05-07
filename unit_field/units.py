@@ -105,6 +105,7 @@ UNITS_SOLID_MEASURE = [
     Unit(u'dam³', _(u'dam³'), _(u'cubic decametre'),   1000,        ),
     Unit(u'hm³',  _(u'hm³'),  _(u'cubic hectometre'),  1000000,     ),
     Unit(u'km³',  _(u'km³'),  _(u'cubic kilometre'),   1000000000,  ),
+    Unit(u'l',    _(u'l'),    _(u'litre'),             0.001,       ),
 ]
 
 UNITS_MASS = [
@@ -266,14 +267,33 @@ UNITS_ANGLE_CRACKLE = [
 ]
 
 
-# Electrical Units
+# Electric Units
 
 UNITS_POWER = [
     Unit(u'W',   _(u'W'),     _(u'watt'),     1),
 ]
 
+# Wärmewiderstand
 UNITS_THERMAL_RESISTANCE = [
+    Unit(u'K/W',   _(u'K/W'),     _(u'K/W'),     1),
+]
+
+# Wärmedurchgangswiderstand
+UNITS_HEAT_TRANSFER_RESISTANCE = [
     Unit(u'm²K/W',   _(u'm²K/W'),     _(u'm²K/W'),     1),
+]
+
+# Wärmeleitfähigkeit
+UNITS_HEAT_CONDUCTANCE = [
+    Unit(u'W/(mK)',   _(u'W/(mK)'),     _(u'W/(mK)'),     1),
+]
+
+UNITS_HEAT_CAPACITY = [
+    Unit(u'Ws/K',   _(u'Ws/K'),     _(u'Ws/K'),     1),
+]
+
+UNITS_SPECIFIC_HEAT_CAPACITY = [
+    Unit(u'Ws/(kgK)',   _(u'Ws/(kgK)'),     _(u'Ws/(kgK)'),     1),
 ]
 
 UNITS_MOTOR_CONSTANT = [

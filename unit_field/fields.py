@@ -189,6 +189,10 @@ class UnitField(FloatField):
         if 'choices' in kwargs:
             raise TypeError("%s invalid attribute 'choices'" % (
                 self.__class__.__name__, ))
+        _units = kwargs.pop('units', None)
+        if _units:
+            self.units = _units
+
         self.auto_convert = kwargs.pop('auto_convert', True)
         self.verbose_name = kwargs.get('verbose_name')
         self.blank = kwargs.get('blank')
