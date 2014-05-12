@@ -67,6 +67,7 @@ UNITS_VISCOSITY = [
 ]
 
 UNITS_LENGTH = [
+    Unit(u'μm',   _(u'μm'),   _(u'micrometre'),   0.000001, ),
     Unit(u'mm',   _(u'mm'),   _(u'milimetre' ),   0.001, ),
     Unit(u'cm',   _(u'cm'),   _(u'centimetre'),   0.01,  ),
     Unit(u'dm',   _(u'dm'),   _(u'decimetre' ),   0.1,   ),
