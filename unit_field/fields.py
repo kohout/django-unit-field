@@ -30,6 +30,10 @@ from unit_field.units import (Unit, UnitValueCreator,
 
     UNITS_POWER,
     UNITS_THERMAL_RESISTANCE,
+    UNITS_HEAT_TRANSFER_RESISTANCE,
+    UNITS_HEAT_CONDUCTANCE,
+    UNITS_HEAT_CAPACITY,
+    UNITS_SPECIFIC_HEAT_CAPACITY,
     UNITS_MOTOR_CONSTANT,
     UNITS_FORCE_CONSTANT,
     UNITS_ELECTRICAL_TIME_CONSTANT,
@@ -42,6 +46,8 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_ANGLE_JERK,
     UNITS_ANGLE_SNAP,
     UNITS_ANGLE_CRACKLE,
+
+    UNITS_VISCOSITY,
 )
 
 
@@ -354,6 +360,22 @@ class AngleSnapField(UnitField):
 
 class AngleCrackleField(UnitField):
     units = UNITS_ANGLE_CRACKLE
+
+
+class HeatTransferResistanceField(UnitField):
+    units = UNITS_HEAT_TRANSFER_RESISTANCE
+
+class HeatConductanceField(UnitField):
+    units = UNITS_HEAT_CONDUCTANCE
+
+class HeatCapacityField(UnitField):
+    units = UNITS_HEAT_CAPACITY
+
+class SpecificHeatCapacityField(UnitField):
+    units = UNITS_SPECIFIC_HEAT_CAPACITY
+
+class ViscosityField(UnitField):
+    units = UNITS_VISCOSITY
 
 try:
     from south.modelsinspector import add_introspection_rules

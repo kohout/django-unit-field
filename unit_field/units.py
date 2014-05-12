@@ -62,6 +62,10 @@ def get_choices(units):
 
     return unit_choices
 
+UNITS_VISCOSITY = [
+    Unit(u'kg/ms',   _(u'kg/ms'),   _(u'kg/ms' ),   1, ),
+]
+
 UNITS_LENGTH = [
     Unit(u'mm',   _(u'mm'),   _(u'milimetre' ),   0.001, ),
     Unit(u'cm',   _(u'cm'),   _(u'centimetre'),   0.01,  ),
