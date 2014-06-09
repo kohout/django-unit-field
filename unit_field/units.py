@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 import math
 
 def convert_unit(value, units, unit_id_in, unit_id_out):

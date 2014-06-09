@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from unit_field.fields import get_factor
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 def get_normalized_value(value, unit, units):
     factor = get_factor(units, unit)
