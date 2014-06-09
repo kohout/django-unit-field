@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 import math
 
-def convert_unit(value, units, abbrev_in, abbrev_out):
+def convert_unit(value, units, unit_id_in, unit_id_out):
     # if units are identical
-    if abbrev_in == abbrev_out:
+    if unit_id_in == unit_id_out:
         return value
 
     #retrieve conversion factors
     for unit in units:
-        if unit.abbrev == abbrev_in:
+        if unit.id == unit_id_in:
             f1 = unit.factor
-        if unit.abbrev == abbrev_out:
+        if unit.id == unit_id_out:
             f2 = unit.factor
 
     return value * f1 / f2
@@ -63,7 +63,9 @@ def get_choices(units):
     return unit_choices
 
 UNITS_VISCOSITY = [
-    Unit(u'kg/ms',   _(u'kg/ms'),   _(u'kg/ms' ),   1, ),
+    # Unit(u'kg/ms',   _(u'kg/ms'),   _(u'kg/ms' ),   1, ),
+    Unit(u'm²/s',   _(u'm²/s'),   _(u'm²/s' ),    1, ),
+    Unit(u'mm²/s',   _(u'mm²/s'),   _(u'mm²/s' ), 0.000001, ),
 ]
 
 UNITS_LENGTH = [
@@ -230,8 +232,6 @@ UNITS_INERTIA_TORQUE = [
 UNITS_TORSION = [
     Unit(u'Nm/arcmin',  _(u'Nm/arcmin'),    _(u'Nm/arcmin'),    1),
 ]
-
-
 
 UNITS_ANGLE_VELOCITY = [
     Unit(u'rad/s',    _(u'rad/s'),    _(u'Radians/s'),  1 ),
