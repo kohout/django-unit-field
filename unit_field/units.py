@@ -194,8 +194,10 @@ UNITS_TORQUE = [
 ]
 
 UNITS_VELOCITY = [
+    Unit(u'mm/s',   _(u'mm/s'),   _(u'milimetres per second'),  0.001 ),
     Unit(u'm/s',    _(u'm/s'),    _(u'metres per second'),      1 ),
-    Unit(u'km/h',   _(u'km/h'),   _(u'kilometres per hour'),    1 ),
+    Unit(u'm/min',  _(u'm/min'),  _(u'metres per minute'),      60 ),
+    Unit(u'km/h',   _(u'km/h'),   _(u'kilometres per hour'),    1 / 3.6 ),
 ]
 
 UNITS_ACCELERATION = [
