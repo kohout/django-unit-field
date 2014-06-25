@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
+from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 import math
+
+def _label(_input, _unit):
+    _input = formats.localize(_input, use_l10n=True)
+    return u'%s %s' % (_input, _unit)
 
 def convert_unit(value, units, unit_id_in, unit_id_out):
     # if units are identical
