@@ -292,7 +292,7 @@ UNITS_THERMAL_RESISTANCE = [
 
 # Wärmedurchgangswiderstand
 UNITS_HEAT_TRANSFER_RESISTANCE = [
-    Unit(u'm²K/W',   _(u'm²K/W'),     _(u'm²K/W'),     1),
+    Unit(u'w/(m²K)',   _(u'w/(m²K)'),     _(u'W/(m²K)'),     1),
 ]
 
 # Wärmeleitfähigkeit
