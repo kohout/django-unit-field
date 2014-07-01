@@ -332,6 +332,11 @@ UNITS_INDUCTANCE = [
     Unit(u'mH',   _(u'mH'),     _(u'mH'),     1),
 ]
 
+UNITS_FLOW_RATE = [
+    Unit(u'm³/h',   _(u'm³/h'),     _(u'm³/h'),     1),
+]
+
+UNITS_FLOW_RATE_CHOICES = get_choices(UNITS_FLOW_RATE)
 UNITS_THERMAL_RESISTANCE_CHOICES = get_choices(UNITS_THERMAL_RESISTANCE)
 UNITS_MOTOR_CONSTANT_CHOICES = get_choices(UNITS_MOTOR_CONSTANT)
 UNITS_FORCE_CONSTANT_CHOICES = get_choices(UNITS_FORCE_CONSTANT)

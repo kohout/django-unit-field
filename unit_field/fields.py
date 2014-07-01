@@ -49,6 +49,7 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_ANGLE_CRACKLE,
 
     UNITS_VISCOSITY,
+    UNITS_FLOW_RATE,
 )
 
 
@@ -379,6 +380,9 @@ class SpecificHeatCapacityField(UnitField):
 
 class ViscosityField(UnitField):
     units = UNITS_VISCOSITY
+
+class FlowRateField(UnitField):
+    units = UNITS_FLOW_RATE
 
 try:
     from south.modelsinspector import add_introspection_rules
