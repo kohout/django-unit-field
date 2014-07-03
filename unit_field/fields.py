@@ -2,6 +2,7 @@
 from django.utils import formats
 from django.db.models import FloatField, CharField as ModelCharField
 from django.forms import CharField
+from django.utils import formats
 from unit_field.units import (Unit, UnitValueCreator,
     UNITS_LENGTH,
     UNITS_SQUARE_MEASURE,
@@ -48,6 +49,7 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_ANGLE_CRACKLE,
 
     UNITS_VISCOSITY,
+    UNITS_FLOW_RATE,
 )
 
 
@@ -129,7 +131,9 @@ class CalculatedFloatField(FloatField):
         input_field_name = self.attname.replace('_value', '_input')
         unit_field_name = self.attname.replace('_value', '_unit')
 
-        input_value = float(getattr(model_instance, input_field_name))
+        a = getattr(model_instance, input_field_name)
+        b = formats.sanitize_separators(str(a).replace(',', '.'))
+        input_value = float(b)
         unit_id = getattr(model_instance, unit_field_name)
 
         unit_value = self.get_unit_by_id(unit_id)
@@ -376,6 +380,9 @@ class SpecificHeatCapacityField(UnitField):
 
 class ViscosityField(UnitField):
     units = UNITS_VISCOSITY
+
+class FlowRateField(UnitField):
+    units = UNITS_FLOW_RATE
 
 try:
     from south.modelsinspector import add_introspection_rules

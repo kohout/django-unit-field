@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
+from django.utils import formats
 from django.utils.translation import ugettext_lazy as _
 import math
+
+def _label(_input, _unit):
+    _input = formats.localize(_input, use_l10n=True)
+    return u'%s %s' % (_input, _unit)
 
 def convert_unit(value, units, unit_id_in, unit_id_out):
     # if units are identical
@@ -290,7 +295,7 @@ UNITS_THERMAL_RESISTANCE = [
 
 # Wärmedurchgangswiderstand
 UNITS_HEAT_TRANSFER_RESISTANCE = [
-    Unit(u'm²K/W',   _(u'm²K/W'),     _(u'm²K/W'),     1),
+    Unit(u'w/(m²K)',   _(u'w/(m²K)'),     _(u'W/(m²K)'),     1),
 ]
 
 # Wärmeleitfähigkeit
@@ -330,6 +335,11 @@ UNITS_INDUCTANCE = [
     Unit(u'mH',   _(u'mH'),     _(u'mH'),     1),
 ]
 
+UNITS_FLOW_RATE = [
+    Unit(u'm³/h',   _(u'm³/h'),     _(u'm³/h'),     1),
+]
+
+UNITS_FLOW_RATE_CHOICES = get_choices(UNITS_FLOW_RATE)
 UNITS_THERMAL_RESISTANCE_CHOICES = get_choices(UNITS_THERMAL_RESISTANCE)
 UNITS_MOTOR_CONSTANT_CHOICES = get_choices(UNITS_MOTOR_CONSTANT)
 UNITS_FORCE_CONSTANT_CHOICES = get_choices(UNITS_FORCE_CONSTANT)
