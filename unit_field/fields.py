@@ -9,6 +9,7 @@ from unit_field.units import (Unit, UnitValueCreator,
     UNITS_SOLID_MEASURE,
     UNITS_MASS,
     UNITS_TIME,
+    UNITS_TIME2,
     UNITS_ELECTRIC_CURRENT,
     UNITS_TEMPERATURE,
     UNITS_AMOUNT_OF_SUBSTANCE,
@@ -272,6 +273,9 @@ class MassField(UnitField):
 
 class TimeField(UnitField):
     units = UNITS_TIME
+
+class Time2Field(UnitField):
+    units = UNITS_TIME2
 
 class TemperatureField(UnitField):
     units = UNITS_TEMPERATURE

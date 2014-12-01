@@ -138,6 +138,15 @@ UNITS_TIME = [
     Unit(u'd',   _(u'd'),   _(u'day'),          86400,    ),
 ]
 
+UNITS_TIME2 = [
+    Unit(u'Hours',     _(u'Hours'),     _(u'Hours'),         1, ),
+    Unit(u'Days',      _(u'Days'),      _(u'Days'),         24, ),
+    Unit(u'Weeks',     _(u'Weeks'),     _(u'Weeks'),       168, ),
+    Unit(u'Months',    _(u'Months'),    _(u'Months'),      720, ),
+    Unit(u'Semesters', _(u'Semesters'), _(u'Semesters'),  4320, ),
+    Unit(u'Years',     _(u'Years'),     _(u'Years'),      8760, ),
+]
+
 UNITS_ELECTRIC_CURRENT = [
     Unit(u'µA',  _(u'µA'),  _(u'microampere'),  0.000001, ),
     Unit(u'mA',  _(u'mA'),  _(u'milliampere'),  0.001,    ),
@@ -164,6 +173,7 @@ UNITS_SQUARE_MEASURE_CHOICES = get_choices(UNITS_SQUARE_MEASURE)
 UNITS_SOLID_MEASURE_CHOICES = get_choices(UNITS_SOLID_MEASURE)
 UNITS_MASS_CHOICES = get_choices(UNITS_MASS)
 UNITS_TIME_CHOICES = get_choices(UNITS_TIME)
+UNITS_TIME2_CHOICES = get_choices(UNITS_TIME2)
 UNITS_ELECTRIC_CURRENT_CHOICES = get_choices(UNITS_ELECTRIC_CURRENT)
 UNITS_TEMPERATURE_CHOICES = get_choices(UNITS_TEMPERATURE)
 UNITS_AMOUNT_OF_SUBSTANCE_CHOICES = get_choices(UNITS_AMOUNT_OF_SUBSTANCE)
