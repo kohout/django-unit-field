@@ -134,7 +134,10 @@ class CalculatedFloatField(FloatField):
 
         a = getattr(model_instance, input_field_name)
         b = formats.sanitize_separators(str(a).replace(',', '.'))
-        input_value = float(b)
+        try:
+            input_value = float(b)
+        except ValueError:
+            input_value = None
         unit_id = getattr(model_instance, unit_field_name)
 
         unit_value = self.get_unit_by_id(unit_id)
@@ -160,6 +163,8 @@ class UnitField(FloatField):
     verbose_name = u'(UnitField)'
 
     blank = False
+
+    db_index = False
 
     null = False
 
@@ -208,6 +213,7 @@ class UnitField(FloatField):
         self.verbose_name = kwargs.get('verbose_name')
         self.blank = kwargs.get('blank')
         self.null = kwargs.get('null')
+        self.db_index = kwargs.get('db_index', False)
         self.validators = kwargs.get('validators', [])
         kwargs['editable'] = False
         kwargs['default'] = 0.
@@ -235,6 +241,7 @@ class UnitField(FloatField):
         cls.add_to_class("%s_unit" % (self.name,), self.unit_field)
 
         self.value_field = CalculatedFloatField(default=0.0,
+	    db_index=self.db_index,
             units=self.units,
             blank=self.blank,
             null=self.null)
