@@ -67,6 +67,11 @@ def get_choices(units):
 
     return unit_choices
 
+UNITS_PERCENTAGE = [
+    Unit(u'%',      _(u'%'),    _(u'Percent'),      0.01),
+    Unit(u'1',      _(u'1'),    _(u'Whole'),        1.0),
+]
+
 UNITS_VISCOSITY = [
     # Unit(u'kg/ms',   _(u'kg/ms'),   _(u'kg/ms' ),   1, ),
     Unit(u'm²/s',   _(u'm²/s'),   _(u'm²/s' ),    1, ),
@@ -155,7 +160,14 @@ UNITS_ELECTRIC_CURRENT = [
 ]
 
 UNITS_TEMPERATURE = [
-    Unit(u'K',      _(u'K'),    _(u'kelvin'),   1 ),
+    Unit(u'K',      _(u'K'),     _(u'kelvin'),   1 ),
+    #Unit(u'°C',     _(u'°C'),    _(u'degree'),   100.0),
+
+    # TODO: find a solution like this (requires a function f(x) and the
+    # corresponding reverse function f-1(x)
+    #Unit(u'°C',     _(u'°C'),    _(u'degree'),
+    #   to_base_unit=lambda x: x + 273.15,
+    #   from_base_unit=lambda x: x - 273.15),
 ]
 
 UNITS_AMOUNT_OF_SUBSTANCE = [

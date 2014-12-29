@@ -32,3 +32,9 @@ class UnitModelMixin(object):
             return u'%s %s' % (_val, _unit_method(), )
 
         return super(UnitModelMixin, self).__getattr__(name)
+        # for debugging:
+        #try:
+        #    return super(UnitModelMixin, self).__getattr__(name)
+        #except AttributeError:
+        #    print "attribute not found:", name
+        #    raise AttributeError

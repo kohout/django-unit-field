@@ -4,6 +4,7 @@ from django.db.models import FloatField, CharField as ModelCharField
 from django.forms import CharField
 from django.utils import formats
 from unit_field.units import (Unit, UnitValueCreator,
+    UNITS_PERCENTAGE,
     UNITS_LENGTH,
     UNITS_SQUARE_MEASURE,
     UNITS_SOLID_MEASURE,
@@ -394,6 +395,9 @@ class ViscosityField(UnitField):
 
 class FlowRateField(UnitField):
     units = UNITS_FLOW_RATE
+
+class PercentageField(UnitField):
+    units = UNITS_PERCENTAGE
 
 try:
     from south.modelsinspector import add_introspection_rules
