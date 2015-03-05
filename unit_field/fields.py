@@ -216,8 +216,9 @@ class UnitField(FloatField):
         self.null = kwargs.get('null')
         self.db_index = kwargs.get('db_index', False)
         self.validators = kwargs.get('validators', [])
+        self.default = kwargs.get('default', 0.0)
         kwargs['editable'] = False
-        kwargs['default'] = 0.
+        kwargs['default'] = self.default
 
         self.default_unit = kwargs.pop('default_unit',
             self.get_base_unit_id())
@@ -227,7 +228,8 @@ class UnitField(FloatField):
     def contribute_to_class(self, cls, name):
         self.name = name
 
-        self.input_field = UnitInputField(default=0,
+        self.input_field = UnitInputField(
+            default=self.default,
             blank=self.blank,
             null=self.null,
             auto_convert=self.auto_convert,
