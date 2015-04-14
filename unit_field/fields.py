@@ -173,6 +173,8 @@ class UnitField(FloatField):
 
     validators = []
 
+    help_text = None
+
     def update_choices(self):
         """
         generates choices list, if not set
@@ -217,6 +219,7 @@ class UnitField(FloatField):
         self.db_index = kwargs.get('db_index', False)
         self.validators = kwargs.get('validators', [])
         self.default = kwargs.get('default', 0.0)
+        self.help_text = kwargs.get('help_text', None)
         kwargs['editable'] = False
         kwargs['default'] = self.default
 
@@ -234,6 +237,7 @@ class UnitField(FloatField):
             null=self.null,
             auto_convert=self.auto_convert,
             validators=self.validators,
+            help_text=self.help_text,
             verbose_name=self.verbose_name)
         cls.add_to_class("%s_input" % (self.name,), self.input_field)
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import floatformat
 
 class UnitModelMixin(object):
 
@@ -10,7 +11,7 @@ class UnitModelMixin(object):
             _label = _(self._meta.get_field(_field).verbose_name)
 
             _unit_field = name.replace('_html', '_unit')
-            _val = getattr(self, _field)
+            _val = floatformat(getattr(self, _field), 2)
             _method_name = u'get_%s_display' % _unit_field
             _unit_method = getattr(self, _method_name)
             return mark_safe(u'<div class="row-fluid">' \
