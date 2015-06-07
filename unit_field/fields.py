@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.utils import formats
+from unit_field.utils import sanitize_separators
 from django.db.models import FloatField, CharField as ModelCharField
 from django.forms import CharField
-from django.utils import formats
 from unit_field.units import (Unit, UnitValueCreator,
     UNITS_PERCENTAGE,
     UNITS_LENGTH,
@@ -92,7 +91,7 @@ class UnitInputField(FloatField):
         of float(). Returns None for empty values.
         """
         value = super(FloatField, self).to_python(value)
-        value = formats.sanitize_separators(value)
+        value = sanitize_separators(value)
         return value
 
     def get_prep_value(self, value):
@@ -134,7 +133,7 @@ class CalculatedFloatField(FloatField):
         unit_field_name = self.attname.replace('_value', '_unit')
 
         a = getattr(model_instance, input_field_name)
-        b = formats.sanitize_separators(str(a).replace(',', '.'))
+        b = sanitize_separators(str(a).replace(',', '.'))
         try:
             input_value = float(b)
         except ValueError:
@@ -147,7 +146,6 @@ class CalculatedFloatField(FloatField):
             setattr(model_instance, self.attname, input_value * unit_value)
         else:
             setattr(model_instance, self.attname, 0.0)
-
         return getattr(model_instance, self.attname)
 
 class UnitField(FloatField):
