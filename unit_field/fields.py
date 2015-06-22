@@ -133,7 +133,7 @@ class CalculatedFloatField(FloatField):
         unit_field_name = self.attname.replace('_value', '_unit')
 
         a = getattr(model_instance, input_field_name)
-        b = sanitize_separators(str(a).replace(',', '.'))
+        b = sanitize_separators(a)
         try:
             input_value = float(b)
         except ValueError:
