@@ -265,7 +265,7 @@ UNITS_TORSION = [
 UNITS_ANGLE_VELOCITY = [
     Unit(u'rad/s',    _(u'rad/s'),    _(u'Radians/s'),  1 ),
     Unit(u'deg/s',    _(u'°/s'),      _(u'Degrees/s'),  math.pi / 180 ),
-    Unit(u'rps',      _(u'rps'),      _(u'rps'), 1.0 / (math.pi * 2.0)),
+    Unit(u'rps',      _(u'rps'),      _(u'rps'), (math.pi * 2.0)),
     Unit(u'rpm',      _(u'rpm'),      _(u'rpm'), (math.pi * 2.0) / 60.0),
 ]
 
