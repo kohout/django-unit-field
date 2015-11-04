@@ -73,6 +73,8 @@ def get_factor(units, unit_id):
 
     for unit in units:
         if unit.id == unit_id:
+            if unit.to_base_function:
+                return unit.to_base_function
             return unit.factor
 
 class UnitInputField(FloatField):
@@ -145,7 +147,12 @@ class CalculatedFloatField(FloatField):
         unit_value = self.get_unit_by_id(unit_id)
 
         if (not input_value is None) and (not unit_value is None):
-            setattr(model_instance, self.attname, input_value * unit_value)
+            if hasattr(unit_value, '__call__'):
+                # conversion by function
+                setattr(model_instance, self.attname, unit_value(input_value))
+            else:
+                # conversion by factor
+                setattr(model_instance, self.attname, input_value * unit_value)
         else:
             setattr(model_instance, self.attname, 0.0)
         return getattr(model_instance, self.attname)

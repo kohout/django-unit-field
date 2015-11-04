@@ -22,10 +22,11 @@ def convert_unit(value, units, unit_id_in, unit_id_out):
     return value * f1 / f2
 
 class Unit(object):
-    def __init__(self, id, abbrev, label, factor=None):
+    def __init__(self, id, abbrev, label, factor=None, to_base_function=None):
         self.id  = id
         self.abbrev = abbrev
         self.label = label
+        self.to_base_function = to_base_function
         if factor is None:
             self.factor = id
         else:
@@ -160,14 +161,10 @@ UNITS_ELECTRIC_CURRENT = [
 ]
 
 UNITS_TEMPERATURE = [
-    Unit(u'K',      _(u'K'),     _(u'kelvin'),   1 ),
-    #Unit(u'°C',     _(u'°C'),    _(u'degree'),   100.0),
-
-    # TODO: find a solution like this (requires a function f(x) and the
-    # corresponding reverse function f-1(x)
-    #Unit(u'°C',     _(u'°C'),    _(u'degree'),
-    #   to_base_unit=lambda x: x + 273.15,
-    #   from_base_unit=lambda x: x - 273.15),
+    #Unit(u'K',      _(u'K'),     _(u'kelvin'),   1 ),
+    Unit(u'°C',     _(u'°C'),    _(u'degree'),   1.0),
+    Unit(u'°F',     _(u'°F'),    _(u'fahrenheit'), 0.0,
+        to_base_function=lambda x: (x - 32.0) / 1.8),
 ]
 
 UNITS_AMOUNT_OF_SUBSTANCE = [
